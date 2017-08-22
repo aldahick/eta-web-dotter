@@ -1,0 +1,12 @@
+{
+  "name": "eta-hicks-web-dotter",
+  "version": "0.0.1",
+  "description": "A game of dots",
+  "homepage": "https://github.com/aldahick/eta-web-dotter",
+  "repository": "https://github.com/aldahick/eta-web-dotter.git",
+  "license": "MIT",
+  "author": "Alex Hicks <alex@crossroadseducation.org> (https://alexhicks.net)",
+  "engines": {
+    "node": ">=8.2.0"
+  }
+}

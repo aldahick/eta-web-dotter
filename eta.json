@@ -1,0 +1,42 @@
+{
+  "css": {},
+  "redirects": {},
+  "dirs": {
+    "controllers": [],
+    "models": [],
+    "staticFiles": ["static"],
+    "views": ["views"],
+    "lifecycleHandlers": [],
+    "requestTransformers": [],
+    "subpathHandlers": []
+  },
+  "indexes": [
+    {
+      "filename": "lib/index.ts",
+      "type": "index",
+      "dirs": ["lib"]
+    },
+    {
+      "filename": "lib/engine/index.ts",
+      "type": "index",
+      "dirs": ["lib/engine"]
+    },
+    {
+      "filename": "static/js/dotter/engine.ts",
+      "type": "export",
+      "dirs": ["lib/engine"]
+    },
+    {
+      "filename": "static/js/dotter/game/entities/index.ts",
+      "type": "index",
+      "dirs": ["static/js/dotter/game/entities"]
+    },
+    {
+      "filename": "static/js/dotter/game/engine/index.ts",
+      "type": "index",
+      "dirs": ["static/js/dotter/game/engine"],
+      "prepend": ["export * from \"dotter/engine.js\";"]
+    }
+  ],
+  "name": "hicks-web-dotter"
+}

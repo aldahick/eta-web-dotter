@@ -1,0 +1,15 @@
+*.js
+*.js.map
+package-lock.json
+/eta.ts
+/db.ts
+/lib/index.ts
+/lib/engine/index.ts
+/node_modules
+/static/js/node_modules
+/static/js/typings
+/static/js/db.ts
+/static/js/dotter/engine.ts
+/static/js/dotter/game/entities/index.ts
+/static/js/dotter/game/network/models.ts
+/static/js/dotter/game/engine/index.ts
