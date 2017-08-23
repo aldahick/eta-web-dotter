@@ -1,28 +1,33 @@
 import * as fs from "fs-extra";
 import * as eta from "../eta";
 import * as db from "../../../db";
+import Game from "./Game";
 import NetworkClient from "./NetworkClient";
 
 let instance: ConnectionServer;
 export class ConnectionServer {
-    public clients: NetworkClient[] = [];
+    public clients: {[key: string]: NetworkClient} = {};
+    public game: Game;
     private io: SocketIO.Server;
 
     public constructor(io: SocketIO.Server) {
         instance = this;
         this.io = io;
+        this.game = new Game();
         this.setupListeners();
     }
 
     public init(): Promise<void> { return Promise.resolve(); }
 
     public async stop(): Promise<void> {
-        this.clients.forEach(c => c.close());
+        Object.keys(this.clients).forEach(k => this.clients[k].close());
         this.io.close();
     }
 
     public removeClient(client: NetworkClient): void {
-        eta.array.remove(this.clients, c => c.id === client.id);
+        delete this.clients[client.id];
+        eta.array.remove(this.game.window.entities, e => e === this.game.players[client.id]);
+        delete this.game.players[client.id];
     }
 
     private setupListeners(): void {
@@ -30,13 +35,14 @@ export class ConnectionServer {
     }
 
     private onConnect(socket: SocketIO.Socket): void {
+        if (!this.game.isStarted) this.game.start();
         const client: NetworkClient = new NetworkClient({
             server: this,
             socket
         });
         client.setup().then(() => {
             eta.logger.trace("A new client has connected.");
-            this.clients.push(client);
+            this.clients[client.id] = client;
         }).catch(err => {
             eta.logger.error(err);
         });

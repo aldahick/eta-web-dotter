@@ -6,7 +6,7 @@
     "models": [],
     "staticFiles": ["static"],
     "views": ["views"],
-    "lifecycleHandlers": [],
+    "lifecycleHandlers": ["lifecycle"],
     "requestTransformers": [],
     "subpathHandlers": []
   },
@@ -25,11 +25,6 @@
       "filename": "static/js/dotter/engine.ts",
       "type": "export",
       "dirs": ["lib/engine"]
-    },
-    {
-      "filename": "static/js/dotter/game/entities/index.ts",
-      "type": "index",
-      "dirs": ["static/js/dotter/game/entities"]
     },
     {
       "filename": "static/js/dotter/game/engine/index.ts",

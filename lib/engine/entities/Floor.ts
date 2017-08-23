@@ -1,27 +1,31 @@
-import * as engine from "dotter/game/engine/index.js";
-import Dot from "dotter/game/entities/Dot.js";
+import Dot from "./Dot.js";
+import IGameEntity from "../IGameEntity";
+import GameWindow from "../GameWindow";
+import Rectangle from "../shapes/Rectangle";
+import VelocityRectangle from "../shapes/VelocityRectangle";
+import Vector2 from "../Vector2";
 
 const FLOOR_HEIGHT = 128; // pixels
 // (g = -9.8 m/s^2 = -9.8/40 m/25ms^2 = -0.245 meters / 25 ms^2 = -0.0245 pixels / 25 ms^2)
 const GRAVITATIONAL_CONSTANT = -0.5; // ... it's complicated.
 
-export default class Floor extends engine.Rectangle implements engine.IGameEntity {
-    public window: engine.ClientWindow;
+export default class Floor extends Rectangle implements IGameEntity {
+    public window: GameWindow;
 
-    public constructor(window: engine.GameWindow) {
-        super(new engine.Vector2(0, window.size.y - FLOOR_HEIGHT), new engine.Vector2(window.size.x, FLOOR_HEIGHT));
+    public constructor(window: GameWindow) {
+        super(new Vector2(0, window.size.y - FLOOR_HEIGHT), new Vector2(window.size.x, FLOOR_HEIGHT));
     }
 
-    public onRender(): void {
-        this.window.context.fillStyle = "gray"; // TODO: Replace with config
-        this.render(this.window.context);
+    public onRender(context: CanvasRenderingContext2D): void {
+        context.fillStyle = "gray"; // TODO: Replace with config
+        this.render(context);
     }
 
     public onUpdate(): void {
         // collision checks!
         this.window.entities.forEach(e => {
             if (e === this) return; // duh
-            if (!(e instanceof engine.VelocityRectangle)) return; // also duh
+            if (!(e instanceof VelocityRectangle)) return; // also duh
             if (e.position.y + e.size.y < this.position.y) { // in the air
                 e.velocity.y -= GRAVITATIONAL_CONSTANT;
             } else if (e.position.y + e.size.y > this.position.y) { // in the... floor?

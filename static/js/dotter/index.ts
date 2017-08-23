@@ -1,5 +1,6 @@
 import Game from "dotter/game/Game.js";
 
 $(document).ready(() => {
-    new Game(<any>$("#canvas")[0]).start();
+    const game: Game = new Game(<any>$("#canvas")[0]);
+    game.start();
 });

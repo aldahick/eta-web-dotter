@@ -1,3 +1,4 @@
+// generate:sort-first
 import Constants from "../Constants.js";
 import Direction from "../Direction.js";
 import Rectangle from "./Rectangle.js";

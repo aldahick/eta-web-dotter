@@ -25,7 +25,7 @@ export default class ClientWindow extends engine.GameWindow {
 
     private render(): void {
         this.context.clearRect(0, 0, this.size.x, this.size.y);
-        this.entities.forEach(e => e.onRender());
+        this.entities.forEach(e => e.onRender(this.context));
     }
 
     private onKeyDown(evt: JQuery.Event): void {
