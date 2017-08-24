@@ -19,6 +19,10 @@ export default class ClientPlayer extends engine.Player {
             this.accelerate(engine.Direction.Left);
             this.emit("accelerate", engine.Direction.Left);
         } // ignore down arrow
+        if (this.isKeyPressed(JQuery.Key.F)) {
+            this.fire();
+            this.emit("fire");
+        }
         this.checkBoundaries(this.window.size);
     }
 

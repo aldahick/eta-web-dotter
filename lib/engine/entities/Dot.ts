@@ -1,4 +1,3 @@
-// generate:sort-first
 import Direction from "../Direction";
 import IGameEntity from "../IGameEntity";
 import GameWindow from "../GameWindow";
@@ -7,6 +6,8 @@ import Vector2 from "../Vector2";
 
 export default abstract class Dot extends VelocityRectangle implements IGameEntity {
     public window: GameWindow;
+    public shouldRemove = false;
+    public readonly isAffectedByGravity = true;
     public onFloor = false;
     public color: string;
 

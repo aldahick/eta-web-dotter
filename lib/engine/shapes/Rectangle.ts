@@ -1,13 +1,13 @@
-// generate:sort-first
+import EventEmitter from "../EventEmitter";
+import Vector2 from "../Vector2";
 
-import Vector2 from "../Vector2.js";
-
-export default abstract class Rectangle {
+export default abstract class Rectangle extends EventEmitter {
     public position: Vector2;
     public size: Vector2;
     public created: Date;
 
     public constructor(position: Vector2, size: Vector2) {
+        super();
         this.position = position;
         this.size = size;
         this.created = new Date();

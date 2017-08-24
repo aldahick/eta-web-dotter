@@ -19,6 +19,7 @@ export default class NetworkClient {
     public async setup(): Promise<void> {
         this.onSelfJoin();
         this.socket.on("accelerate", this.onAccelerate.bind(this));
+        this.socket.on("fire", this.onFire.bind(this));
         this.socket.on("disconnect", this.onDisconnect.bind(this));
     }
 
@@ -33,6 +34,7 @@ export default class NetworkClient {
             color: this.color,
             position: this.server.game.players[this.id].position
         };
+        this.server.game.players[this.id].on("die", this.onSelfDie.bind(this));
         this.socket.emit("self:ready", player);
         this.socket.broadcast.emit("player:join", player);
         Object.keys(this.server.game.players).forEach(k => {
@@ -50,7 +52,30 @@ export default class NetworkClient {
         this.server.game.players[this.id].accelerate(direction);
     }
 
+    public onFire(): void {
+        this.socket.broadcast.emit("player:fire", this.id);
+        this.server.game.players[this.id].fire();
+    }
+
     public onDisconnect(): void {
+        this.removePlayer();
         this.server.removeClient(this);
+    }
+
+    public onSelfDie(): void {
+        this.socket.emit("self:die");
+        this.socket.broadcast.emit("player:die", this.id);
+        this.removePlayer();
+        setTimeout(() => {
+            this.onSelfJoin();
+        }, 1000);
+    }
+
+    public removePlayer(): void {
+        eta.array.remove(this.server.game.window.entities, e => {
+            if (e instanceof engine.Player) return e.id === this.id;
+            else return false;
+        });
+        delete this.server.game.players[this.id];
     }
 }

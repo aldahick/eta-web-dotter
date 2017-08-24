@@ -11,6 +11,8 @@ const GRAVITATIONAL_CONSTANT = -0.5; // ... it's complicated.
 
 export default class Floor extends Rectangle implements IGameEntity {
     public window: GameWindow;
+    public readonly isAffectedByGravity = false;
+    public readonly shouldRemove = false;
 
     public constructor(window: GameWindow) {
         super(new Vector2(0, window.size.y - FLOOR_HEIGHT), new Vector2(window.size.x, FLOOR_HEIGHT));
@@ -24,9 +26,8 @@ export default class Floor extends Rectangle implements IGameEntity {
     public onUpdate(): void {
         // collision checks!
         this.window.entities.forEach(e => {
-            if (e === this) return; // duh
-            if (!(e instanceof VelocityRectangle)) return; // also duh
-            if (e.position.y + e.size.y < this.position.y) { // in the air
+            if (!(e instanceof VelocityRectangle)) return;
+            if (e.isAffectedByGravity && e.position.y + e.size.y < this.position.y) { // in the air
                 e.velocity.y -= GRAVITATIONAL_CONSTANT;
             } else if (e.position.y + e.size.y > this.position.y) { // in the... floor?
                 e.position.y = this.position.y - e.size.y; // reset position to ground level

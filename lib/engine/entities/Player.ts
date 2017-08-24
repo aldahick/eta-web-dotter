@@ -1,22 +1,24 @@
+import Bullet from "./Bullet";
 import Direction from "../Direction";
 import Dot from "./Dot.js";
+import Vector2 from "../Vector2";
 
 export default class Player extends Dot {
-    private handlers: {[key: string]: Function[]} = {};
     protected jumpStart: number;
+    public id: string;
+
+    public constructor(position: Vector2, color: string, id: string) {
+        super(position, color);
+        this.id = id;
+    }
 
     public onUpdate(): void {
         super.onUpdate();
     }
 
-    public on(eventName: string, callback: Function): void {
-        if (!this.handlers[eventName]) this.handlers[eventName] = [];
-        this.handlers[eventName].push(callback);
-    }
-
-    public emit(eventName: string, ...args: any[]): void {
-        if (!this.handlers[eventName]) return;
-        this.handlers[eventName].forEach(f => f(args[0], args[1], args[2]));
+    public fire(): void {
+        const bullet: Bullet = new Bullet(this.position.add(new Vector2(this.size.x, 0)), new Vector2(20, this.velocity.y), this.id);
+        this.window.addEntity(bullet);
     }
 
     public jump(): void {

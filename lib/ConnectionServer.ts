@@ -3,6 +3,7 @@ import * as eta from "../eta";
 import * as db from "../../../db";
 import Game from "./Game";
 import NetworkClient from "./NetworkClient";
+import * as engine from "./engine/index";
 
 let instance: ConnectionServer;
 export class ConnectionServer {
@@ -26,8 +27,6 @@ export class ConnectionServer {
 
     public removeClient(client: NetworkClient): void {
         delete this.clients[client.id];
-        eta.array.remove(this.game.window.entities, e => e === this.game.players[client.id]);
-        delete this.game.players[client.id];
     }
 
     private setupListeners(): void {

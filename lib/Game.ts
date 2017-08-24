@@ -16,7 +16,7 @@ export default class Game {
     }
 
     public addPlayer(id: string, color: string): void {
-        this.players[id] = new engine.Player(this.window.getMiddle(), color);
+        this.players[id] = new engine.Player(this.window.getMiddle(), color, id);
         this.window.addEntity(this.players[id]);
     }
 }

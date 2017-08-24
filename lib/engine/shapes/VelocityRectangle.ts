@@ -1,4 +1,3 @@
-// generate:sort-first
 import Constants from "../Constants.js";
 import Direction from "../Direction.js";
 import Rectangle from "./Rectangle.js";
@@ -28,29 +27,36 @@ export default abstract class VelocityRectangle extends Rectangle {
         this.position = this.position.add(this.velocity);
     }
 
-    public checkBoundaries(max: Vector2, min: Vector2 = new Vector2(0, 0)): void {
+    /** Returns true if this object was stopped */
+    public checkBoundaries(max: Vector2, min: Vector2 = new Vector2(0, 0)): boolean {
         // TODO: This is gross, not sure how to refactor to be pretty
+        let isStopped = false;
         if (this.position.x < min.x) {
             this.position.x = min.x;
             if (this.velocity.x < 0) {
                 this.velocity.x = 0;
             }
+            isStopped = true;
         } else if (this.position.x > max.x - this.size.x) {
             this.position.x = max.x - this.size.x;
             if (this.velocity.x > 0) {
                 this.velocity.x = 0;
             }
+            isStopped = true;
         }
         if (this.position.y < min.y) {
             this.position.y = min.y;
             if (this.velocity.y < 0) {
                 this.velocity.y = 0;
             }
+            isStopped = true;
         } else if (this.position.y > max.y - this.size.y) {
             this.position.y = max.y - this.size.y;
             if (this.velocity.y > 0) {
                 this.velocity.y = 0;
             }
+            isStopped = true;
         }
+        return isStopped;
     }
 }

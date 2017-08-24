@@ -29,6 +29,15 @@ export default class GameWindow {
     }
 
     protected update(): void {
-        this.entities.forEach(e => e.onUpdate());
+        const indexesToRemove: number[] = [];
+        this.entities.forEach((e, i) => {
+            e.onUpdate();
+            if (e.shouldRemove) {
+                indexesToRemove.push(i);
+            }
+        });
+        indexesToRemove.forEach((k, i) => {
+            this.entities.splice(k - i, 1);
+        });
     }
 }
