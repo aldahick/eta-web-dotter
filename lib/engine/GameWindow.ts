@@ -1,7 +1,6 @@
-import IGameEntity from "./IGameEntity.js";
-import Vector2 from "./Vector2.js";
-
-const EVENT_LOOP_INTERVAL = 25; // ms
+import Constants from "./Constants";
+import IGameEntity from "./IGameEntity";
+import Vector2 from "./Vector2";
 
 export default class GameWindow {
     public readonly size: Vector2;
@@ -12,7 +11,7 @@ export default class GameWindow {
     }
 
     public start(): void {
-        setInterval(() => this.loop(), EVENT_LOOP_INTERVAL);
+        setInterval(() => this.loop(), Constants.eventLoopInterval);
     }
 
     public addEntity(entity: IGameEntity): void {

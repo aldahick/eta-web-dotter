@@ -1,3 +1,4 @@
+import Constants from "../Constants";
 import Direction from "../Direction";
 import IGameEntity from "../IGameEntity";
 import GameWindow from "../GameWindow";
@@ -14,7 +15,7 @@ export default abstract class Dot extends VelocityRectangle implements IGameEnti
     public direction: Direction;
 
     public constructor(position: Vector2, color: string, direction: Direction) {
-        super(position, new Vector2(32, 64));
+        super(position, new Vector2(Constants.dotWidth, Constants.dotHeight));
         this.color = color;
         this.direction = direction;
     }

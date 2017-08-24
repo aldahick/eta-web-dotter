@@ -1,3 +1,4 @@
+import Constants from "../Constants";
 import GameWindow from "../GameWindow";
 import IGameEntity from "../IGameEntity";
 import Player from "./Player";
@@ -11,7 +12,7 @@ export default class Bullet extends VelocityRectangle implements IGameEntity {
     public ownerId: string;
 
     public constructor(position: Vector2, velocity: Vector2, ownerId: string) {
-        super(position, new Vector2(4, 4));
+        super(position, new Vector2(Constants.bulletDiameter, Constants.bulletDiameter));
         this.velocity = velocity;
         this.ownerId = ownerId;
     }

@@ -9,18 +9,18 @@ export default abstract class VelocityRectangle extends Rectangle {
     public accelerate(direction: Direction): void {
         switch (direction) {
             case Direction.Up:
-                this.velocity.y += Constants.accelerationConstant; break;
+                this.velocity.y += Constants.acceleration; break;
             case Direction.Down:
-                this.velocity.y -= Constants.accelerationConstant; break;
+                this.velocity.y -= Constants.acceleration; break;
             case Direction.Left:
-                this.velocity.x -= Constants.accelerationConstant; break;
+                this.velocity.x -= Constants.acceleration; break;
             case Direction.Right:
-                this.velocity.x += Constants.accelerationConstant; break;
+                this.velocity.x += Constants.acceleration; break;
         }
     }
 
     public decelerate(): void {
-        this.velocity = this.velocity.toZero(Constants.accelerationConstant / 4);
+        this.velocity = this.velocity.toZero(Constants.acceleration / 4);
     }
 
     public move(): void {
