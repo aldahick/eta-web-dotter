@@ -10,19 +10,18 @@ export default abstract class Dot extends VelocityRectangle implements IGameEnti
     public readonly isAffectedByGravity = true;
     public onFloor = false;
     public color: string;
+    /** the direction this dot is facing */
+    public direction: Direction;
 
-    public constructor(position: Vector2, color: string) {
-        super(position, new Vector2(32, 32));
+    public constructor(position: Vector2, color: string, direction: Direction) {
+        super(position, new Vector2(32, 64));
         this.color = color;
+        this.direction = direction;
     }
 
     public onRender(context: CanvasRenderingContext2D): void {
-        context.beginPath();
-        const radius: number = this.size.x / 2;
-        context.arc(this.position.x + radius, this.position.y + radius, radius, 0, 2 * Math.PI, false);
         context.fillStyle = this.color;
-        context.fill();
-        context.closePath();
+        this.render(context, true);
     }
 
     public onUpdate(): void {
@@ -35,5 +34,9 @@ export default abstract class Dot extends VelocityRectangle implements IGameEnti
         if (direction === Direction.Left || direction === Direction.Right) return super.accelerate(direction);
         if (direction === Direction.Up) this.velocity.y -= 1;
         // do nothing if down
+    }
+
+    public turn(): void {
+        this.direction = this.direction === Direction.Right ? Direction.Left : Direction.Right;
     }
 }

@@ -1,5 +1,5 @@
 export default class HelperColor {
-    private static availableColors: string[] = ["blue", "purple", "red", "orange"];
+    private static availableColors: string[] = ["#0000FF", "#800080", "#FF0000", "#FFA500"];
     private static lastColorIndex = -1;
 
     public static nextColor(): string {

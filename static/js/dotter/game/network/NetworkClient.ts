@@ -15,20 +15,23 @@ export default class NetworkClient {
         this.socket.on("player:join", this.onPlayerJoin.bind(this));
         this.socket.on("player:accelerate", this.onPlayerAccelerate.bind(this));
         this.socket.on("player:fire", this.onPlayerFire.bind(this));
+        this.socket.on("player:turn", this.onPlayerTurn.bind(this));
     }
 
     private onSelfReady(player: engine.NetworkPlayer): void {
         $("#loading-message").hide();
         this.me = player;
-        this.game.player = new engine.ClientPlayer(new engine.Vector2(player.position.x, player.position.y), player.color, player.id);
+        this.game.player = new engine.ClientPlayer(new engine.Vector2(player.position.x, player.position.y), player.color, player.direction, player.id);
+        this.game.player.isActualPlayer = true;
         this.game.player.on("accelerate", this.onSelfAccelerate.bind(this));
         this.game.player.on("fire", this.onSelfFire.bind(this));
+        this.game.player.on("turn", this.onSelfTurn.bind(this));
         this.game.player.on("die", this.onSelfDie.bind(this));
         this.game.window.addEntity(this.game.player);
     }
 
     private onPlayerJoin(player: engine.NetworkPlayer): void {
-        this.players[player.id] = new engine.Player(new engine.Vector2(player.position.x, player.position.y), player.color, player.id);
+        this.players[player.id] = new engine.ClientPlayer(new engine.Vector2(player.position.x, player.position.y), player.color, player.direction, player.id);
         this.game.window.addEntity(this.players[player.id]);
     }
 
@@ -40,6 +43,10 @@ export default class NetworkClient {
         this.players[playerId].fire();
     }
 
+    private onPlayerTurn(playerId: string): void {
+        this.players[playerId].turn();
+    }
+
     private onSelfAccelerate(direction: engine.Direction): void {
         this.socket.emit("accelerate", direction);
     }
@@ -48,6 +55,11 @@ export default class NetworkClient {
         this.socket.emit("fire");
     }
 
+    private onSelfTurn(): void {
+        this.socket.emit("turn");
+    }
+
     private onSelfDie(): void {
+        console.log("self died");
     }
 }

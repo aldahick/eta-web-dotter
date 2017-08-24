@@ -7,8 +7,8 @@ export default class Player extends Dot {
     protected jumpStart: number;
     public id: string;
 
-    public constructor(position: Vector2, color: string, id: string) {
-        super(position, color);
+    public constructor(position: Vector2, color: string, direction: Direction, id: string) {
+        super(position, color, direction);
         this.id = id;
     }
 
@@ -16,8 +16,17 @@ export default class Player extends Dot {
         super.onUpdate();
     }
 
+    public accelerate(direction: Direction): void {
+        super.accelerate(direction);
+        if ((direction === Direction.Left || direction === Direction.Right) && direction !== this.direction) {
+            this.direction = direction;
+        }
+    }
+
     public fire(): void {
-        const bullet: Bullet = new Bullet(this.position.add(new Vector2(this.size.x, 0)), new Vector2(20, this.velocity.y), this.id);
+        const bulletPositionDiff: Vector2 = new Vector2(this.direction === Direction.Left ? -4 : this.size.x, 12);
+        const bulletVelocity: Vector2 = new Vector2(this.direction === Direction.Left ? -20 : 20, this.velocity.y);
+        const bullet: Bullet = new Bullet(this.position.add(bulletPositionDiff), bulletVelocity, this.id);
         this.window.addEntity(bullet);
     }
 

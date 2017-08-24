@@ -15,8 +15,8 @@ export default class Game {
         this.isStarted = true;
     }
 
-    public addPlayer(id: string, color: string): void {
-        this.players[id] = new engine.Player(this.window.getMiddle(), color, id);
-        this.window.addEntity(this.players[id]);
+    public addPlayer(player: engine.NetworkPlayer): void {
+        this.players[player.id] = new engine.Player(player.position, player.color, player.direction, player.id);
+        this.window.addEntity(this.players[player.id]);
     }
 }

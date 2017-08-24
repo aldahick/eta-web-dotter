@@ -20,7 +20,7 @@ export default class Floor extends Rectangle implements IGameEntity {
 
     public onRender(context: CanvasRenderingContext2D): void {
         context.fillStyle = "gray"; // TODO: Replace with config
-        this.render(context);
+        this.render(context, true);
     }
 
     public onUpdate(): void {
@@ -32,6 +32,10 @@ export default class Floor extends Rectangle implements IGameEntity {
             } else if (e.position.y + e.size.y > this.position.y) { // in the... floor?
                 e.position.y = this.position.y - e.size.y; // reset position to ground level
                 e.velocity.y = 0; // dead stop
+            } else {
+                const vy = e.velocity.y;
+                e.velocity = e.velocity.toZero(0.20);
+                e.velocity.y = vy;
             }
             if (e instanceof Dot) {
                 e.onFloor = e.position.y + e.size.y === this.position.y;

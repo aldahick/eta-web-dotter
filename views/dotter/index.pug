@@ -3,3 +3,7 @@ extends ./shared/layout.pug
 block dotter_body
     h4#loading-message Loading...
     canvas#canvas(width="1024", height="512")
+    div(style="display: none;")
+        svg#image-player(width="32", height="64")
+            rect.body(width="32", height="64", style="fill: red;")
+            rect.visor(width="8", height="8", x="24", y="8", style="fill: green;")

@@ -28,13 +28,8 @@ export default abstract class Rectangle extends EventEmitter {
     /** Does not modify fillStyle or strokeStyle */
     public render(context: CanvasRenderingContext2D, useFill = true): void {
         context.beginPath();
-        context.moveTo(this.position.x, this.position.y);
-        context.lineTo(this.position.x + this.size.x, this.position.y);
-        context.lineTo(this.position.x + this.size.x, this.position.y + this.size.y);
-        context.lineTo(this.position.x, this.position.y + this.size.y);
-        context.lineTo(this.position.x, this.position.y);
-        if (useFill) context.fill();
-        else context.stroke();
+        const method = useFill ? context.fillRect : context.strokeRect;
+        method.apply(context, [this.position.x, this.position.y, this.size.x, this.size.y]);
         context.closePath();
     }
 }
