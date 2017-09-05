@@ -1,19 +1,15 @@
 import Constants from "../Constants";
 import Dot from "./Dot.js";
-import IGameEntity from "../IGameEntity";
+import IGameEntity from "../IGameObject";
 import GameWindow from "../GameWindow";
 import Rectangle from "../shapes/Rectangle";
 import VelocityRectangle from "../shapes/VelocityRectangle";
 import Vector2 from "../Vector2";
 
-export default class Floor extends Rectangle implements IGameEntity {
+export default class Surface extends Rectangle implements IGameEntity {
     public window: GameWindow;
     public readonly isAffectedByGravity = false;
     public readonly shouldRemove = false;
-
-    public constructor(window: GameWindow) {
-        super(new Vector2(0, window.size.y - Constants.floorHeight), new Vector2(window.size.x, Constants.floorHeight));
-    }
 
     public onRender(context: CanvasRenderingContext2D): void {
         context.fillStyle = "gray"; // TODO: Replace with config
@@ -35,7 +31,7 @@ export default class Floor extends Rectangle implements IGameEntity {
                 e.velocity.y = vy;
             }
             if (e instanceof Dot) {
-                e.onFloor = e.position.y + e.size.y === this.position.y;
+                e.onSurface = e.position.y + e.size.y === this.position.y;
             }
         });
     }

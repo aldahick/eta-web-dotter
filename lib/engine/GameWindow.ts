@@ -1,10 +1,10 @@
 import Constants from "./Constants";
-import IGameEntity from "./IGameEntity";
+import Entity from "./entities/Entity";
 import Vector2 from "./Vector2";
 
 export default class GameWindow {
     public readonly size: Vector2;
-    public readonly entities: IGameEntity[] = [];
+    public readonly entities: Entity[] = [];
 
     public constructor(size: Vector2) {
         this.size = size;

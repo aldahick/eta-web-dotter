@@ -6,6 +6,10 @@ export default class EventEmitter {
         this.handlers[eventName].push(callback);
     }
 
+    public onMany(handlers: {[key: string]: Function}): void {
+        Object.keys(handlers).forEach(k => this.on(k, handlers[k]));
+    }
+
     public emit(eventName: string, ...args: any[]): void {
         if (!this.handlers[eventName]) return;
         this.handlers[eventName].forEach(f => f(args[0], args[1], args[2]));

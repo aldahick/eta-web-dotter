@@ -38,7 +38,7 @@ export default class Player extends Dot {
 
     public jump(): void {
         if (this.jumpStart === undefined) {
-            if (!this.onFloor) return;
+            if (!this.onSurface) return;
             this.jumpStart = Date.now();
         }
         if (Date.now() - this.jumpStart <= Constants.playerJumpInterval) {

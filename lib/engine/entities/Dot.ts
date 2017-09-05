@@ -1,15 +1,11 @@
 import Constants from "../Constants";
 import Direction from "../Direction";
-import IGameEntity from "../IGameEntity";
+import Entity from "./Entity";
 import GameWindow from "../GameWindow";
 import VelocityRectangle from "../shapes/VelocityRectangle";
 import Vector2 from "../Vector2";
 
-export default abstract class Dot extends VelocityRectangle implements IGameEntity {
-    public window: GameWindow;
-    public shouldRemove = false;
-    public readonly isAffectedByGravity = true;
-    public onFloor = false;
+export default abstract class Dot extends Entity {
     public color: string;
     /** the direction this dot is facing */
     public direction: Direction;

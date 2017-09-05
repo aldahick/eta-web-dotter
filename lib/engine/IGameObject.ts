@@ -1,6 +1,6 @@
 import GameWindow from "./GameWindow.js";
 
-export default interface IGameEntity {
+export default interface IGameObject {
     window: GameWindow;
     shouldRemove: boolean;
     isAffectedByGravity: boolean;
