@@ -1,11 +1,12 @@
 import Constants from "../Constants";
+import Entity from "./Entity";
 import GameWindow from "../GameWindow";
-import IGameEntity from "../IGameEntity";
+import IGameObject from "../IGameObject";
 import Player from "./Player";
 import Vector2 from "../Vector2";
 import VelocityRectangle from "../shapes/VelocityRectangle";
 
-export default class Bullet extends VelocityRectangle implements IGameEntity {
+export default class Bullet extends Entity {
     public window: GameWindow;
     public shouldRemove = false;
     public readonly isAffectedByGravity = false;
@@ -20,13 +21,13 @@ export default class Bullet extends VelocityRectangle implements IGameEntity {
     public onUpdate(): void {
         this.move();
         if (this.checkBoundaries(this.window.size)) this.shouldRemove = true;
-        this.window.entities.forEach(e => {
-            if (!(e instanceof Player)) return;
-            if (e.isColliding(this)) { // bullet has hit another dot
-                e.shouldRemove = true;
+        this.window.objects.forEach(o => {
+            if (!(o instanceof Player)) return;
+            if (o.isColliding(this)) { // bullet has hit another dot
+                o.shouldRemove = true;
                 this.shouldRemove = true;
                 // TODO Show chat message
-                e.emit("die");
+                o.emit("die");
             }
         });
     }

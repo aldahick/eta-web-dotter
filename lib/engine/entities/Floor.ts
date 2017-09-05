@@ -1,15 +1,19 @@
 import Constants from "../Constants";
 import Dot from "./Dot.js";
-import IGameEntity from "../IGameObject";
+import IGameObject from "../IGameObject";
 import GameWindow from "../GameWindow";
 import Rectangle from "../shapes/Rectangle";
 import VelocityRectangle from "../shapes/VelocityRectangle";
 import Vector2 from "../Vector2";
 
-export default class Surface extends Rectangle implements IGameEntity {
+export default class Floor extends Rectangle implements IGameObject {
     public window: GameWindow;
     public readonly isAffectedByGravity = false;
     public readonly shouldRemove = false;
+
+    public constructor(window: GameWindow) {
+        super(new Vector2(0, window.size.y - Constants.floorHeight), new Vector2(window.size.x, Constants.floorHeight));
+    }
 
     public onRender(context: CanvasRenderingContext2D): void {
         context.fillStyle = "gray"; // TODO: Replace with config
@@ -18,7 +22,7 @@ export default class Surface extends Rectangle implements IGameEntity {
 
     public onUpdate(): void {
         // collision checks!
-        this.window.entities.forEach(e => {
+        this.window.objects.forEach(e => {
             if (!(e instanceof VelocityRectangle)) return;
             if (e.isAffectedByGravity && e.position.y + e.size.y < this.position.y) { // in the air
                 e.velocity.y -= Constants.gravity;

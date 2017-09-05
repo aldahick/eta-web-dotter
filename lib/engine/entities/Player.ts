@@ -33,7 +33,7 @@ export default class Player extends Dot {
             (this.direction === Direction.Left ? -1 : 1) * Constants.bulletVelocity,
             this.velocity.y);
         const bullet: Bullet = new Bullet(this.position.add(bulletPositionDiff), bulletVelocity, this.id);
-        this.window.addEntity(bullet);
+        this.window.addObject(bullet);
     }
 
     public jump(): void {

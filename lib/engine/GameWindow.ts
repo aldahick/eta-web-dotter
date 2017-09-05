@@ -1,10 +1,11 @@
 import Constants from "./Constants";
 import Entity from "./entities/Entity";
+import IGameObject from "./IGameObject";
 import Vector2 from "./Vector2";
 
 export default class GameWindow {
     public readonly size: Vector2;
-    public readonly entities: Entity[] = [];
+    public readonly objects: IGameObject[] = [];
 
     public constructor(size: Vector2) {
         this.size = size;
@@ -14,9 +15,9 @@ export default class GameWindow {
         setInterval(() => this.loop(), Constants.eventLoopInterval);
     }
 
-    public addEntity(entity: IGameEntity): void {
-        entity.window = this;
-        this.entities.push(entity);
+    public addObject(object: IGameObject): void {
+        object.window = this;
+        this.objects.push(object);
     }
 
     public getMiddle(): Vector2 {
@@ -29,14 +30,14 @@ export default class GameWindow {
 
     protected update(): void {
         const indexesToRemove: number[] = [];
-        this.entities.forEach((e, i) => {
+        this.objects.forEach((e, i) => {
             e.onUpdate();
             if (e.shouldRemove) {
                 indexesToRemove.push(i);
             }
         });
         indexesToRemove.forEach((k, i) => {
-            this.entities.splice(k - i, 1);
+            this.objects.splice(k - i, 1);
         });
     }
 }

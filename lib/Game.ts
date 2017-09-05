@@ -7,7 +7,7 @@ export default class Game {
 
     public constructor() {
         this.window = new engine.GameWindow(new engine.Vector2(1024, 512));
-        this.window.addEntity(new engine.Floor(this.window));
+        this.window.addObject(new engine.Floor(this.window));
     }
 
     public start(): void {
@@ -17,6 +17,6 @@ export default class Game {
 
     public addPlayer(player: engine.NetworkPlayer): void {
         this.players[player.id] = new engine.Player(player.position, player.color, player.direction, player.id);
-        this.window.addEntity(this.players[player.id]);
+        this.window.addObject(this.players[player.id]);
     }
 }

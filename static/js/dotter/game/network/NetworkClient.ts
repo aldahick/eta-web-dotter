@@ -27,12 +27,12 @@ export default class NetworkClient {
         this.game.player.on("fire", this.onSelfFire.bind(this));
         this.game.player.on("turn", this.onSelfTurn.bind(this));
         this.game.player.on("die", this.onSelfDie.bind(this));
-        this.game.window.addEntity(this.game.player);
+        this.game.window.addObject(this.game.player);
     }
 
     private onPlayerJoin(player: engine.NetworkPlayer): void {
         this.players[player.id] = new engine.ClientPlayer(new engine.Vector2(player.position.x, player.position.y), player.color, player.direction, player.id);
-        this.game.window.addEntity(this.players[player.id]);
+        this.game.window.addObject(this.players[player.id]);
     }
 
     private onPlayerAccelerate(playerId: string, direction: engine.Direction): void {

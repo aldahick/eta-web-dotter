@@ -9,7 +9,7 @@ export default class Game {
 
     public constructor(canvas: HTMLCanvasElement) {
         this.window = new engine.ClientWindow(canvas);
-        this.window.addEntity(new engine.Floor(this.window));
+        this.window.addObject(new engine.Floor(this.window));
         this.network = new NetworkClient(this);
         (<any>window).game = this;
     }

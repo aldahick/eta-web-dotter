@@ -84,7 +84,7 @@ export default class NetworkClient {
     }
 
     public removePlayer(): void {
-        eta.array.remove(this.server.game.window.entities, e => {
+        eta.array.remove(this.server.game.window.objects, e => {
             if (e instanceof engine.Player) return e.id === this.id;
             else return false;
         });
